@@ -56,7 +56,8 @@ function Suite(func, {
 	}
 
 	scope = async function(scope, func) {
-		if (global.suite === "all" || scope.split(' ').includes(global.suite)) {
+		const scopes = (scope instanceof Array) ? scope : scope.split(' ');
+		if (global.suite === "all" || scopes.includes(global.suite)) {
 			await func();
 		}
 	}
