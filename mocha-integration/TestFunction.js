@@ -6,6 +6,8 @@ chai.use(require('chai-as-promised'))
 const expect = chai.expect;
 const assert = chai.assert;
 
+const reserved = ['title', 'step', 'full', 'test', 'err', 'reject', 'feature', 'severity'];
+
 module.exports = class TestFunction {
 	/**
 	 * @class
@@ -33,17 +35,20 @@ module.exports = class TestFunction {
 			//Because earlier it was an object, and there wes no destructuring assignment
 			//So i have to make a link to mocha's step earlier
 			const configObject = Object.assign({}, config, conf);
-			let {title, step, full, test, err, reject, rejectionCases} = configObject;
+			let {title, step, full, test, err, reject, feature, severity} = configObject;
 			//Check if default value needed
 			const mfn = (step) ? stepFunction : it;
 			err = (err) ? err : onErr;
 			test = (test) ? test : _test;
 			//
 			mfn(title, async () => {
-				let args;
+				let args = configObject;
 				if (argfn) 
 					args = await argfn();
 				const result = fn((argfn) ? args : configObject);
+				//Allure args
+				Object.keys(args).forEach(a => { if(!(a in reserved)) allure.addArgument(a, args[a]) });
+				if (feature) allure.feature(feature);
 				if (result instanceof Promise || (result.then instanceof Function && result.catch instanceof Function))
 					if (!full)
 						await (reject ? expect(result).to.be.rejected : expect(result).to.not.be.rejected);
@@ -58,19 +63,6 @@ module.exports = class TestFunction {
 				else
 					return test(result, configObject);
 			});
-			if (rejectionCases && Object.keys(rejectionCases).length > 0)
-				describe("Rejection cases", () => {
-					if (rejectionCases instanceof Object)
-						for (let rfn in rejectionCases) {
-							if (rejectionCases[rfn][Symbol.toStringTag] === "TestFunction") {
-								rejectionCases[rfn]({title: rfn});
-							}
-							else if (rejectionCases[rfn] instanceof Function)
-								it(rfn, rejectionCases[rfn])
-						}
-					else 
-						console.warn("Rejection cases are specified but it's not an object, skipping");
-				})
 		};
 		//Overriding function prototype, so we actually can check that our function is an instance of TestFunction
 		testFunction.__proto__ = TestFunction.__proto__;
@@ -85,7 +77,7 @@ module.exports = class TestFunction {
 const _test = (res, config) => {
 	console.warn(`Test function for test "${config.title}" was not specified, fallback to default. See '_test in TestFunction.js'`);
 	return expect(res).to.be.ok
-} //'Ok' is not good, but default tester should not be ever used;
+} //'Ok' is not good, but default tester should not be ever use it;
 const onErr = (err) =>  {
 	if (err instanceof chai.AssertionError)
 		 throw err;
