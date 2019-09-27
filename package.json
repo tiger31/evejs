@@ -1,5 +1,5 @@
 {
-  "name": "mocha-integration",
+  "name": "mocha-api-integration",
   "version": "1.0.0",
   "description": "Mocha extension for integration api testing",
   "main": "index.js",
