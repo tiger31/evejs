@@ -1,2 +1,5 @@
 node_modules/
 *.sh
+**/allure-report
+**/allure-results
+**/log.json
