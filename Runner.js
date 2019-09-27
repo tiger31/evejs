@@ -93,7 +93,7 @@ Runner.prototype.args = function() {
 	const argv = require('yargs').argv;
 	if (argv.c || argv.check) {
 		this.logger.debug({ prefix: ["STARTUP"], message: `No test will be run, working in check mode`});
-		this.exit((argv.scenario && !Object.values(this.config.scenarios).includes(argv.scenario)) ? 0 : 1);
+		this.exit((argv.scenario && !Object.values(this.config.scenarios).includes(argv.scenario)) ? 1 : 0);
 	}
 	//Suite
 	if (!argv.suite)
