@@ -44,10 +44,13 @@ function Runner(config) {
 	if (this.config.mochaOptions && this.config.mochaOptions.delay !== undefined)
 		delete this.config.mochaOptions.delay;
 
+	if (this.config.mochaOptions && this.config.mochaOptions.runner !== undefined)
+		delete this.config.mochaOptions.runner;
+
 	this.args();
 
 	this.mochaRunner = new Mocha(this.config.mochaOptions);
-	this.mochaRunner.delay();
+	this.mochaRunner.delay().reporter('mocha-allure-reporter');
 
 
 	this.on = (...args) => this.emitter.on(...args);

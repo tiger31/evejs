@@ -81,6 +81,7 @@ MochaFollower.prototype.intercept = function intercept() {
 				data: response.data
 			}
 		}
+		allure.createAttachment("Response", JSON.stringify(collect), "application/json");
 		if (self.currentTest) {
 			if (!self.currentTest._requests)
 				self.currentTest._requests = [];
@@ -110,6 +111,7 @@ MochaFollower.prototype.intercept = function intercept() {
 				data: error.response.data
 			}
 		}
+		allure.createAttachment("Response", JSON.stringify(collect), "application/json");
 		if (self.currentTest) {
 			if (!self.currentTest._requests)
 				self.currentTest._requests = [];
