@@ -6,6 +6,8 @@ const Emitter = require('./EventEmitter.js');
 function Suite(func, {
 	asyncErrorMode,
 	asyncErrorBehaviour,
+	feature,
+	epic,
 } = {}) {
 	const runner = global.MIRunner;
 	this.asyncErrorMode = asyncErrorMode || runner.config.asyncErrorMode || Suite.asyncErrorMode.INTERRUPT_SUITE;
@@ -100,11 +102,15 @@ function Suite(func, {
 
 	this.run = function() {
 		//TODO config mocha auto-wrap
+		global.suiteEpic = this.epic;
+		global.suiteFeature = this.feature;
 		try {
 			testBlock(self.executionContext);
 		} catch (err) {
 			runner.error(`Error ocurred during building mocha for "${this.name}". Run interrupted. Here's an error:`, err);
 		}
+		delete global.suiteEpic;
+		delete global.suiteFeature;
 	}
 
 	this.emerge = function() {
