@@ -1,15 +1,9 @@
 const Suite = require('./Suite.js');
 const AsyncJob = require('./AsyncJob.js')
-const Serializable = require('./Serializable.js');
 const moment = require('moment');
 function Monitor(suites) {
-	Serializable.apply(this, ['async']);
 	this.posY = 0;
 	let y = 0;
-
-	this.runner = MIRunner;
-	this.logger = this.runner.logger;
-	this.logger.registerModule(this);
 
 	this.suites = [];
 
@@ -76,11 +70,6 @@ function Monitor(suites) {
 		y++;
 		suite.getAsyncs().forEach(a => {
 			process.stdout.write(Buffer.from(`    ${a.name.padEnd(41)} ${Monitor.status[a.status]}\n`)); //?
-			const jobObj = {
-				job: a,
-				timeline: []
-			};
-			suiteObj.jobs.push(jobObj);
 			const aY = y;
 			const jobStateHandler = (status) => {
 				const delta = - (_this.posY - aY);
@@ -96,21 +85,7 @@ function Monitor(suites) {
 	this.posY = y;
 }
 
-Monitor.prototype = Object.create(Serializable.prototype);
 Monitor.prototype.constructor = Monitor;
-
-Monitor.prototype.serialize = function serialize() {
-	return {
-		states: AsyncJob.status,
-		suites: this.suites.map(s => ({ 
-			suite: s.suite.name,
-			jobs: s.jobs.map(j => ({
-				job: j.job.name,
-				timeline: j.timeline
-			}))
-		}))
-	}
-}
 
 Monitor.status = {
 	[AsyncJob.status.NOT_STARTED]: '\033[2mnone\033[0m',

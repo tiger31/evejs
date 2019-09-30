@@ -6,7 +6,6 @@ const MIErr = require('./MIError.js');
 const Colors = require('./Colors.js');
 const Emitter = require('./EventEmitter.js');
 const MochaFollower = require('./MochaFollower.js');
-const Serializable = require('./Serializable.js');
 
 const MIrc = require('./MIrc.js');
 
@@ -14,6 +13,7 @@ const fs = require('fs');
 const path = require('path');
 const moment = require('moment');
 const Mocha = require('mocha');
+require('mocha-steps');
 
 const constants = {
 	EVENT_MI_CLASS_REQUIRE: "class-require",
@@ -65,31 +65,12 @@ Runner.prototype.exit = function(code) {
 	try {
 		this.suites.forEach(suite => suite.emerge());
 	} catch (_) {}
-	this.logger.registerModule(this.asLoggerModule(code));
-	fs.writeFileSync(`${this.root}/log.json`, this.logger.serialize());
-	//TODO Logger here
 	process.exit(code || 0);
 }
 
 Runner.prototype.error = function(message, err) {
 	this.logger.fatal({ message: message, error: err })
 	this.exit(1);
-}
-
-Runner.prototype.asLoggerModule = function module(exitCode) {
-	const self = this;
-	return Object.assign(Object.create(Serializable.prototype), {
-		name: "runner",
-		serialize() {
-			return {
-				config: self.config,
-				scenario: global.scenario,
-				suite: global.suite,
-				exitCode: exitCode,
-				date: moment().valueOf()
-			}
-		}
-	})
 }
 
 Runner.prototype.args = function() {
@@ -234,7 +215,6 @@ Runner.prototype.run = async function() {
 			if (err) this.exit(1);
 			this.exit(0);
 		}));
-		this.follower && this.follower.attach();
 	} catch (err) {
 		this.error("Error ocurred during require files in Mocha. Run interrupted", err);
 	}

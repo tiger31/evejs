@@ -1,4 +1,3 @@
-const utils = require('../tests/tests.utils.js')
 const mocha = require('mocha');
 
 const chai = require('chai');
@@ -6,7 +5,7 @@ chai.use(require('chai-as-promised'))
 const expect = chai.expect;
 const assert = chai.assert;
 
-const reserved = ['title', 'step', 'full', 'test', 'err', 'reject', 'feature', 'severity'];
+const reserved = ['title', 'step', 'full', 'test', 'err', 'reject', 'feature', 'severity', 'epic'];
 
 module.exports = class TestFunction {
 	/**
@@ -24,8 +23,9 @@ module.exports = class TestFunction {
 	 * @param {Function} [config.test] - Test function over "fn" result
 	 * @param {Function} [config.err] - Test function over "fn" rejection
 	 * @param {bool} [config.reject=false] - If "true", checks that "fn" returned promise and it was rejected
-	 * @param {object} [config.rejectionCases] - Object with specific functions. Key is a mocha's test title, value - function inside "it". All function wraps in describe with title "Rejection cases"
-
+	 * @param {string} [config.feature] - Allure feature argument
+	 * @param {string} [config.severity="normal"] - Allure test severity argument
+	 * @param {string} [config.epic] - Allure epic ergument
 	 * @returns {TestFunction}
 	 */
 	constructor(fn, config) {
@@ -35,7 +35,7 @@ module.exports = class TestFunction {
 			//Because earlier it was an object, and there wes no destructuring assignment
 			//So i have to make a link to mocha's step earlier
 			const configObject = Object.assign({}, config, conf);
-			let {title, step, full, test, err, reject, feature, severity} = configObject;
+			let {title, step, full, test, err, reject, feature, severity, epic} = configObject;
 			//Check if default value needed
 			const mfn = (step) ? stepFunction : it;
 			err = (err) ? err : onErr;
@@ -47,8 +47,11 @@ module.exports = class TestFunction {
 					args = await argfn();
 				const result = fn((argfn) ? args : configObject);
 				//Allure args
-				Object.keys(args).forEach(a => { if(!(a in reserved)) allure.addArgument(a, args[a]) });
+				Object.keys(args).forEach(a => { if(!reserved.includes(a)) { console.log(a); allure.addArgument(a, args[a]) }});
 				if (feature) allure.feature(feature);
+				if (epic) allure.epic(epic);
+				if (severity) allure.severity(severity);
+				//End allure args
 				if (result instanceof Promise || (result.then instanceof Function && result.catch instanceof Function))
 					if (!full)
 						await (reject ? expect(result).to.be.rejected : expect(result).to.not.be.rejected);
