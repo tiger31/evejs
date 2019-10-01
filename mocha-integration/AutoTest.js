@@ -67,8 +67,8 @@ const FunctionsHolder = class FunctionsHolder {
 	[testsVarKey] = {};
 	parent = { _: undefined };
 	constructor(functions) {
-		if (functions.test)
-			throw new Error("Can't override reserved property \"test\" in FunctionsHolder");
+		if (functions.test || functions.cascade)
+			throw new Error("Can't override reserved property \"test\" or \"cascade\" in FunctionsHolder");
 		else {
 			for (let key in functions) {
 				const func = functions[key]
@@ -100,6 +100,12 @@ const FunctionsHolder = class FunctionsHolder {
 			return func.test();
 		return func;
 	});
+	cascade(title, list) {
+		const self = this;
+		describe(title, () => {
+			for(let key of (list || Object.keys(self[testsVarKey]))) self[testsVarKey][key]();
+		})
+	}
 }
 
 module.exports =  {
