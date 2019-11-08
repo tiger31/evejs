@@ -44,14 +44,15 @@ function Runner(config) {
 	if (this.config.mochaOptions && this.config.mochaOptions.delay !== undefined)
 		delete this.config.mochaOptions.delay;
 
-	if (this.config.mochaOptions && this.config.mochaOptions.reporter !== undefined)
-		delete this.config.mochaOptions.reporter;
-
 	this.args();
 
 	this.mochaRunner = new Mocha(this.config.mochaOptions);
-	this.mochaRunner.delay().reporter('mocha-allure-reporter');
+	this.mochaRunner.delay();
 
+	if (this.config.allure === true) {
+		global.MI_ALLURE = true,
+		this.mochaRunner.reporter('mocha-allure-reporter');
+	}
 
 	this.on = (...args) => this.emitter.on(...args);
 	this.off = (...args) => this.emitter.off(...args);

@@ -48,10 +48,12 @@ module.exports = class TestFunction {
 				args = Object.assign({}, configObject, args)
 				const result = fn(args);
 				//Allure args
-				Object.keys(args).forEach(a => { if(!reserved.includes(a)) { console.log(a); allure.addArgument(a, args[a]) }});
-				if (feature || global.suiteFeature) allure.feature(feature || global.suiteFeature);
-				if (epic || global.suiteEpic) allure.epic(epic || global.suiteEpic);
-				if (severity) allure.severity(severity);
+				if (global.MI_ALLURE) {
+					Object.keys(args).forEach(a => { if(!reserved.includes(a)) { console.log(a); allure.addArgument(a, args[a]) }});
+					if (feature || global.suiteFeature) allure.feature(feature || global.suiteFeature);
+					if (epic || global.suiteEpic) allure.epic(epic || global.suiteEpic);
+					if (severity) allure.severity(severity);
+				}
 				//End allure args
 				if (result instanceof Promise || (result.then instanceof Function && result.catch instanceof Function))
 					if (!full)
