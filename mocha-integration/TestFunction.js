@@ -42,10 +42,11 @@ module.exports = class TestFunction {
 			test = (test) ? test : _test;
 			//
 			mfn(title, async () => {
-				let args = configObject;
+				let args = {};
 				if (argfn) 
 					args = await argfn();
-				const result = fn((argfn) ? args : configObject);
+				args = Object.assign({}, configObject, args)
+				const result = fn(args);
 				//Allure args
 				Object.keys(args).forEach(a => { if(!reserved.includes(a)) { console.log(a); allure.addArgument(a, args[a]) }});
 				if (feature || global.suiteFeature) allure.feature(feature || global.suiteFeature);
@@ -58,13 +59,13 @@ module.exports = class TestFunction {
 					else
 						await result.then(res => {
 							if (!reject)
-								return test(res, configObject);
+								return test(res, args);
 							else
 								throw new chai.AssertionError("Promise should've been rejected", res);
 								//assert.fail("Promise should've been rejected");	
-						}).catch(error => err(error, configObject));
+						}).catch(error => err(error, args));
 				else
-					return test(result, configObject);
+					return test(result, args);
 			});
 		};
 		//Overriding function prototype, so we actually can check that our function is an instance of TestFunction

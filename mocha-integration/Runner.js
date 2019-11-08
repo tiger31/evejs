@@ -44,8 +44,8 @@ function Runner(config) {
 	if (this.config.mochaOptions && this.config.mochaOptions.delay !== undefined)
 		delete this.config.mochaOptions.delay;
 
-	if (this.config.mochaOptions && this.config.mochaOptions.runner !== undefined)
-		delete this.config.mochaOptions.runner;
+	if (this.config.mochaOptions && this.config.mochaOptions.reporter !== undefined)
+		delete this.config.mochaOptions.reporter;
 
 	this.args();
 
