@@ -1,0 +1,20 @@
+stages:
+  - eslint
+  - test
+
+elsint:
+  stage: eslint
+  image: node:latest
+  allow_failure: true
+  script:
+    - npm install
+    - ./node_modules/.bin/eslint lib/classes
+  artifacts:
+    paths:
+      - 'node_modules/'
+
+test:
+  stage: test
+  image: node:latest
+  script:
+    - npm run test

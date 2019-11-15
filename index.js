@@ -1,3 +1,3 @@
-const Runner = require('./mocha-integration/Runner.js');
+const Runner = require('./lib/Runner.js');
 
 module.exports = Runner;
