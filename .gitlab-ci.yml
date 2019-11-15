@@ -9,12 +9,10 @@ elsint:
   script:
     - npm install
     - ./node_modules/.bin/eslint lib/classes
-  artifacts:
-    paths:
-      - 'node_modules/'
 
 test:
   stage: test
   image: node:latest
   script:
+    - npm install
     - npm run test
