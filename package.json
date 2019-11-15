@@ -4,7 +4,9 @@
   "description": "Mocha extension for integration api testing",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/_mocha test/*.test.js --require mocha-steps --require test/utils.js"
+    "test": "./node_modules/mocha/bin/_mocha test/*.test.js --require mocha-steps --require test/utils.js",
+    "eslint": "./node_modules/.bin/eslint lib/classes",
+    "eslint-fix": "./node_modules/.bin/eslint lib/classes --fix"
   },
   "repository": {
     "type": "git",
