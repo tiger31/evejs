@@ -38,7 +38,7 @@ describe("TestSuite", () => {
 				test('C', () => {})
 			});
 			test('B', () => {})
-		}, name: "Suite", runner: {}, context: {}});
+		}, name: "Suite", runner: { driver: {test: () => {}}}, context: {}});
 		await chai.expect(s.run()).to.not.be.rejected;
 		chai.expect(s.errors).to.be.empty;
 		chai.expect(arr).to.have.ordered.members(['BTS', 'BT', 'BTS', 'BT', 'AT', 'ATS', 'AT', 'BT', 'AT', 'ATS'])
