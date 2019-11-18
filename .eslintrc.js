@@ -6,9 +6,10 @@ module.exports = {
 	},
 	'parser': 'babel-eslint',
 	'plugins': [
-		'babel'
+		'babel',
+		'jsdoc'
 	],
-	'extends': 'eslint:recommended',
+	'extends': ['eslint:recommended', 'plugin:jsdoc/recommended'],
 	'globals': {
 		'Atomics': 'readonly',
 		'SharedArrayBuffer': 'readonly'

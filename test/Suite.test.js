@@ -10,13 +10,11 @@ describe('Suite class', () => {
 				seed("Seed 1", () => {});
 				seed("Seed 2", () => {});
 				emerge(() => {});
-				main(() => {});
 			}
 		});
 		chai.expect(suite.seeds).to.have.lengthOf(2);
 		chai.expect(suite.seeds.map(seed => seed.name)).to.include.all.members(['Seed 1', 'Seed 2']);
 		chai.expect(suite.emergeBlocks).to.have.lengthOf(1);
-		chai.expect(suite.test).to.be.instanceOf(Function);
 	});
 	it('Emerge block error does not crash suite', async () => {
 		const suite = new Suite({ fn: () => { emerge(() => { throw new Error()})}, name: "Emerge 1", runner: ""});
@@ -38,11 +36,6 @@ describe('Suite class', () => {
 					chai.expect(inst.seeds).to.have.lengthOf(1)
 						.and.include.property('0')
 						.and.include.property('name', 'Seed 1')
-				});
-				it('main function', () => {
-					const foo = () => {};
-					global['main'](foo);
-					chai.expect(inst.test).to.be.equal(foo);
 				});
 				it('emerge function', () => {
 					const foos = [() => {}, () => {}];
@@ -147,22 +140,6 @@ describe('Suite class', () => {
 					.and.to.be.instanceOf(Error);
 				chai.expect(suite.context).to.not.include({a: 1});
 			})
-		})
-	});
-	describe('Suite main function', () => {
-		it('Main function does not throw', async () => {
-			const suite = new Suite({ fn: () => {}, name: "Main 1", runner: ""});
-			suite.main((context) => { context.a = 1 }, {});
-			await chai.expect(suite.runTests()).to.not.be.rejected;
-			chai.expect(suite.context).to.include({a: 1});
-		});
-		it('Main function throws err', async () => {
-			const suite = new Suite({ fn: () => {}, name: "Main 1", runner: ""});
-			suite.main((context) => { throw new Error() }, {});
-			await chai.expect(suite.runTests()).to.be.rejectedWith(errors.MIFrameworkError);
-			chai.expect(suite.errors).to.have.lengthOf(1)
-				.and.include.property('0')
-				.and.to.be.instanceOf(Error);
 		})
 	});
 });
