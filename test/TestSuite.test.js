@@ -9,7 +9,6 @@ describe("TestSuite", () => {
 			suite("Suite", () => {});
 			test("Test", () => {});
 		}, name: "TestSuite", context: {}, runner: ""});
-		chai.expect(s.run).to.not.throw();
 		chai.expect(s.errors).to.be.empty;
 		chai.expect(s.runnables).to.have.lengthOf(2);
 		chai.expect(s.suites).to.have.lengthOf(1);
