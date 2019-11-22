@@ -1,3 +1,5 @@
-const Runner = require('./lib/Runner.js');
-
-module.exports = Runner;
+const mocha = require('mocha');
+const runner = new mocha();
+require('mocha-steps');
+runner.delay().run();
+run();

@@ -5,6 +5,7 @@ const Test = require('../../../lib/classes/Test');
 
 describe('Runner files including', () => {
 	it('Including single file', async () => {
+		const Runner = require('../../../lib/classes/Runner');
 		const runner = new Runner({ test: { dir: 'test/Runner/full/tests', pattern: "*.mi.js" }});
 		await chai.expect(runner.run()).to.not.be.rejected;
 	}).timeout(5000)
