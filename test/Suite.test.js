@@ -2,11 +2,12 @@ const Suite = require('../lib/classes/Suite');
 
 describe('Suite class', () => {
 	let inst;
+	const runner = { scope: (scope, fn) => fn()};
 	it("Create class instance", () => {
-		inst = new Suite({ fn: () => {}, name: "Root", runner: ""});
+		inst = new Suite({ fn: () => {}, name: "Root", runner: runner});
 	});
 	it("Suite initialization", () => {
-		const suite = new Suite({ name: "Full 1", runner: "", fn: () => {
+		const suite = new Suite({ name: "Full 1", runner: runner, fn: () => {
 				seed("Seed 1", () => {});
 				seed("Seed 2", () => {});
 				emerge(() => {});
@@ -17,7 +18,7 @@ describe('Suite class', () => {
 		chai.expect(suite.emergeBlocks).to.have.lengthOf(1);
 	});
 	it('Emerge block error does not crash suite', async () => {
-		const suite = new Suite({ fn: () => { emerge(() => { throw new Error()})}, name: "Emerge 1", runner: ""});
+		const suite = new Suite({ fn: () => { emerge(() => { throw new Error()})}, name: "Emerge 1", runner: runner});
 		await chai.expect(suite.runEmerges()).to.not.be.rejected;
 	});
 	describe("Suite hooks", () => {
@@ -69,19 +70,19 @@ describe('Suite class', () => {
 	});
 	describe('Run seeds', () => {
 		it('Suite with single sync seed', async () => {
-			const suite = new Suite({ fn: () => {}, name: "Suite 1", runner: "" });
+			const suite = new Suite({ fn: () => {}, name: "Suite 1", runner: runner });
 			suite.seed('seed', (context) => { context.a = 1 });
 			await chai.expect(suite.runSeeds()).to.not.be.rejected;
 			chai.expect(suite.context).to.include.property('a', 1);
 		});
 		it('Suite with single async seed', async () => {
-			const suite = new Suite({ fn: () => {}, name: "Suite 1", runner: "" });
+			const suite = new Suite({ fn: () => {}, name: "Suite 1", runner: runner });
 			suite.seed('seed', delayed((context) => { context.a = 1 }, 500));
 			await chai.expect(suite.runSeeds()).to.not.be.rejected;
 			chai.expect(suite.context).to.include.property('a', 1);
 		});
 		it('Suite with two sync seeds', async () => {
-			const suite = new Suite({ fn: () => {}, name: "Suite 2", runner: "" });
+			const suite = new Suite({ fn: () => {}, name: "Suite 2", runner: runner });
 			suite.seed('seed', (context) => { context.a = 1 });
 			suite.seed('seed2', (context) => { context.b = 1 });
 			chai.expect(suite.seed).to.have.lengthOf(2);
@@ -90,7 +91,7 @@ describe('Suite class', () => {
 				.and.own.include({b: 1});
 		});
 		it('Suite with two async seeds', async () => {
-			const suite = new Suite({ fn: () => {}, name: "Suite 3", runner: "" });
+			const suite = new Suite({ fn: () => {}, name: "Suite 3", runner: runner });
 			suite.seed('seed', delayed((context) => { context.a = 1 }, 500));
 			suite.seed('seed2', delayed((context) => { context.b = 1 }, 500));
 			chai.expect(suite.seed).to.have.lengthOf(2);
@@ -99,7 +100,7 @@ describe('Suite class', () => {
 				.and.own.include({b: 1});
 		});
 		it("Suite with seed that throws error in sync", async () => {
-			const suite = new Suite({ fn: () => {}, name: "Suite 4", runner: "" });
+			const suite = new Suite({ fn: () => {}, name: "Suite 4", runner: runner });
 			suite.seed('seed', (context) => { throw new TypeError() });
 			await chai.expect(suite.runSeeds()).to.not.be.rejected;
 			chai.expect(suite.errors).to.have.lengthOf(1)
@@ -107,7 +108,7 @@ describe('Suite class', () => {
 				.and.to.be.instanceOf(TypeError);
 		});
 		it("Suite with seed that throws error in async", async () => {
-			const suite = new Suite({ fn: () => {}, name: "Suite 4", runner: "" });
+			const suite = new Suite({ fn: () => {}, name: "Suite 4", runner: runner });
 			suite.seed('seed', timeout_f(500, false, new ReferenceError()));
 			await chai.expect(suite.runSeeds()).to.not.be.rejected;
 			chai.expect(suite.errors).to.have.lengthOf(1)
@@ -121,7 +122,7 @@ describe('Suite class', () => {
 		});
 		describe("Seeding behaviour", () => {
 			it('CONTINUE', async () => {
-				const suite = new Suite({ fn: () => {}, name: "Suite 4", runner: "" }, { behavior: Suite.behaviour.CONTINUE });
+				const suite = new Suite({ fn: () => {}, name: "Suite 4", runner: runner }, { behavior: Suite.behaviour.CONTINUE });
 				suite.seed('seed', timeout_f(500, false, new ReferenceError()));
 				suite.seed('seed', delayed((context) => { context.a = 1 }, 500));
 				await chai.expect(suite.runSeeds()).to.not.be.rejected;
@@ -131,7 +132,7 @@ describe('Suite class', () => {
 				chai.expect(suite.context).to.include({a: 1});
 			});
 			it('INTERRUPT', async () => {
-				const suite = new Suite({ fn: () => {}, name: "Suite 5", runner: "" }, { behavior: Suite.behaviour.INTERRUPT });
+				const suite = new Suite({ fn: () => {}, name: "Suite 5", runner: runner }, { behavior: Suite.behaviour.INTERRUPT });
 				suite.seed('seed', timeout_f(500, false, new Error()));
 				suite.seed('seed', delayed((context) => { context.a = 1 }, 500));
 				await chai.expect(suite.runSeeds()).to.not.be.rejected;
