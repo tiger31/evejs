@@ -10,7 +10,7 @@ const scopes = [
 
 const rs = (scopes, length, dir) => {
 	it(`Scope: ${scopes}`, () => {
-		const runner = new Runner({ scope: scopes, test: { dir: dir, pattern: "*.rs.js" }});
+		const runner = new Runner({ filters: { scope: scopes }, test: { dir: dir, pattern: "*.rs.js" }});
 		runner.unloadTestFiles();
 		chai.expect(runner.seeds).to.have.lengthOf(length)
 	});
@@ -18,7 +18,7 @@ const rs = (scopes, length, dir) => {
 
 const rss = (scopes, length, dir) => {
 	it(`Scope: ${scopes}`, async () => {
-		const runner = new Runner({ scope: scopes, test: { dir: dir, pattern: "*.rss.js" }});
+		const runner = new Runner({ filters: { scope: scopes }, test: { dir: dir, pattern: "*.rss.js" }});
 		runner.unloadTestFiles();
 		await chai.expect(runner.runSeeds()).to.not.be.rejected;
 		chai.expect(runner.context.value).to.have.lengthOf(length);
@@ -27,7 +27,7 @@ const rss = (scopes, length, dir) => {
 
 const ss = (scopes, length, dir) => {
 	it(`Scope: ${scopes}`, () => {
-		const runner = new Runner({ scope: scopes, test: { dir: dir, pattern: "*.ss.js" }});
+		const runner = new Runner({ filters: { scope: scopes }, test: { dir: dir, pattern: "*.ss.js" }});
 		runner.unloadTestFiles();
 		chai.expect(runner.MISuites).to.include.property('0')
 			.and.include.property('seeds')
@@ -37,7 +37,7 @@ const ss = (scopes, length, dir) => {
 
 const sss = (scopes, length, dir) => {
 	it(`Scope: ${scopes}`, async () => {
-		const runner = new Runner({ scope: scopes, test: { dir: dir, pattern: "*.sss.js" }});
+		const runner = new Runner({ filters: { scope: scopes }, test: { dir: dir, pattern: "*.sss.js" }});
 		runner.unloadTestFiles();
 		await chai.expect(runner.run()).to.not.be.rejected;
 		chai.expect(runner.MISuites).to.include.property('0')
@@ -48,7 +48,7 @@ const sss = (scopes, length, dir) => {
 
 const tss = (scopes, length, dir) => {
 	it(`Scope: ${scopes}`, async () => {
-		const runner = new Runner({ scope: scopes, test: { dir: dir, pattern: "*.tss.js" }});
+		const runner = new Runner({ filters: { scope: scopes }, test: { dir: dir, pattern: "*.tss.js" }});
 		runner.unloadTestFiles();
 		await chai.expect(runner.run()).to.not.be.rejected;
 		chai.expect(runner.MISuites).to.include.property('0')
@@ -60,7 +60,7 @@ const tss = (scopes, length, dir) => {
 
 const ts = (scopes, length, dir) => {
 	it(`Scope: ${scopes}`, async () => {
-		const runner = new Runner({ scope: scopes, test: { dir: dir, pattern: "*.ts.js" }});
+		const runner = new Runner({ filters: { scope: scopes }, test: { dir: dir, pattern: "*.ts.js" }});
 		runner.driver.test = (title, fn) => { fn(); };
 		runner.unloadTestFiles();
 		await chai.expect(runner.run()).to.not.be.rejected;
@@ -72,7 +72,7 @@ const ts = (scopes, length, dir) => {
 
 const rsu = (scopes, length, dir) => {
 	it(`Scope: ${scopes}`, async () => {
-		const runner = new Runner({scope: scopes, test: {dir: dir, pattern: "*.rsu.js"}});
+		const runner = new Runner({filters: { scope: scopes }, test: {dir: dir, pattern: "*.rsu.js"}});
 		runner.driver.test = (title, fn) => { fn();	};
 		runner.unloadTestFiles();
 		chai.expect(runner.MISuites).to.have.lengthOf(length);
@@ -81,7 +81,7 @@ const rsu = (scopes, length, dir) => {
 
 const tsss = (scopes, length, dir) => {
 	it(`Scope: ${scopes}`, async () => {
-		const runner = new Runner({scope: scopes, test: {dir: dir, pattern: "*.tsss.js"}});
+		const runner = new Runner({filters: { scope: scopes }, test: {dir: dir, pattern: "*.tsss.js"}});
 		runner.driver.test = (title, fn) => { fn();	};
 		runner.unloadTestFiles();
 		await chai.expect(runner.run()).to.not.be.rejected;
