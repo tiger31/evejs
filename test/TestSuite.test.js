@@ -1,8 +1,11 @@
 const TestSuite = require('../lib/classes/TestSuite');
 
+
 describe("TestSuite", () => {
 	it ("Create TestSuite instance", () => {
-		const suite = new TestSuite({fn: () => {}, name: "TestSuite", context: {}, runner: ""})
+		const suite = new TestSuite({fn: () => {}, name: "TestSuite", context: {}, runner: {
+			driver: { suite: () => {}, test: () => {}}
+		}})
 	});
 	it('Add nested suite and test', () => {
 		const s = new TestSuite({fn: () => {
@@ -37,7 +40,7 @@ describe("TestSuite", () => {
 				test('C', () => {})
 			});
 			test('B', () => {})
-		}, name: "Suite", runner: { driver: {test: () => {}}}, context: {}});
+		}, name: "Suite", runner: { driver: {test: () => {}, suite: () => {}}}, context: {}});
 		await chai.expect(s.run()).to.not.be.rejected;
 		chai.expect(s.errors).to.be.empty;
 		chai.expect(arr).to.have.ordered.members(['BTS', 'BT', 'BTS', 'BT', 'AT', 'ATS', 'AT', 'BT', 'AT', 'ATS'])

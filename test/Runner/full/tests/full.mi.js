@@ -8,6 +8,6 @@ mi('Suite', () => {
 	});
 	suite('Test suite', (context) => {
 		for(let value of context.values)
-			test(`Test ${value}`, () => { throw new Error(value) });
+			test(`Test ${value}`, () => { context[value] = value; });
 	})
 });
