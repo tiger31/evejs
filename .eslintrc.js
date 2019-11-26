@@ -30,7 +30,7 @@ module.exports = {
 			'error',
 			'single'
 		],
-		'no-param-reassign': 2,
+		'no-param-reassign': 1,
 		'prefer-promise-reject-errors': 2,
 		'no-undefined': 2,
 		'callback-return': 2,

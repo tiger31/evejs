@@ -2,7 +2,7 @@ const Suite = require('../lib/classes/Suite');
 
 describe('Suite class', () => {
 	let inst;
-	const runner = { scope: (scope, fn) => fn(), filter: (params, fn) => fn()};
+	const runner = { scope: (scope, fn) => fn(), filter: (params, parent, fn) => fn()};
 	it("Create class instance", () => {
 		inst = new Suite({ fn: () => {}, name: "Root", runner: runner});
 	});

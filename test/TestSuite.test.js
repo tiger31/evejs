@@ -13,7 +13,7 @@ describe("TestSuite", () => {
 			suite("Suite", () => {});
 			test("Test", () => {});
 		}, name: "TestSuite", context: {}, runner: {
-			filter: (scope, fn) => fn(),
+			filter: (scope, parent, fn) => fn(),
 		}});
 		chai.expect(s.errors).to.be.empty;
 		chai.expect(s.runnables).to.have.lengthOf(2);
@@ -43,7 +43,7 @@ describe("TestSuite", () => {
 				test('C', () => {})
 			});
 			test('B', () => {})
-		}, name: "Suite", runner: { driver: {test: () => {}, suite: () => {}}, filter: (scope, fn) => fn()}, context: {}});
+		}, name: "Suite", runner: { driver: {test: () => {}, suite: () => {}}, filter: (scope, parent, fn) => fn()}, context: {}});
 		await chai.expect(s.run()).to.not.be.rejected;
 		chai.expect(s.errors).to.be.empty;
 		chai.expect(arr).to.have.ordered.members(['BTS', 'BT', 'BTS', 'BT', 'AT', 'ATS', 'AT', 'BT', 'AT', 'ATS'])
