@@ -115,14 +115,9 @@ describe('Suite class', () => {
 				.and.own.include.property('0')
 				.and.to.be.instanceOf(ReferenceError);
 		});
-		describe("Seeding modes", () => {
-			it('ALLOW_TO_FAIL', () => {
-
-			})
-		});
 		describe("Seeding behaviour", () => {
 			it('CONTINUE', async () => {
-				const suite = new Suite({ fn: () => {}, name: "Suite 4", runner: runner }, { behavior: Suite.behaviour.CONTINUE });
+				const suite = new Suite({ fn: () => {}, name: "Suite 4", runner: runner }, { behaviour: Suite.behaviour.CONTINUE });
 				suite.seed('seed', timeout_f(500, false, new ReferenceError()));
 				suite.seed('seed', delayed((context) => { context.a = 1 }, 500));
 				await chai.expect(suite.runSeeds()).to.not.be.rejected;
@@ -132,7 +127,7 @@ describe('Suite class', () => {
 				chai.expect(suite.context).to.include({a: 1});
 			});
 			it('INTERRUPT', async () => {
-				const suite = new Suite({ fn: () => {}, name: "Suite 5", runner: runner }, { behavior: Suite.behaviour.INTERRUPT });
+				const suite = new Suite({ fn: () => {}, name: "Suite 5", runner: runner }, { behaviour: Suite.behaviour.INTERRUPT });
 				suite.seed('seed', timeout_f(500, false, new Error()));
 				suite.seed('seed', delayed((context) => { context.a = 1 }, 500));
 				await chai.expect(suite.runSeeds()).to.not.be.rejected;
