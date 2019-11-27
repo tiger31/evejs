@@ -24,28 +24,4 @@ describe("TestSuite", () => {
 		chai.expect(s.tests).to.include.property('0')
 			.and.include.property('name', 'Test');
 	});
-	it('Hooks sequence', async () => {
-		const arr = [];
-		const BT = () => arr.push('BT');
-		const BTS = () => arr.push('BTS');
-		const AT = () => arr.push('AT');
-		const ATS = () => arr.push('ATS');
-		const s = new TestSuite({fn: () => {
-			beforeTests(BTS);
-			beforeTest(BT);
-			afterTests(ATS);
-			afterTest(AT);
-			suite('A', () => {
-				beforeTests(BTS);
-				beforeTest(BT);
-				afterTests(ATS);
-				afterTest(AT);
-				test('C', () => {})
-			});
-			test('B', () => {})
-		}, name: "Suite", runner: { driver: {test: () => {}, suite: () => {}}, filter: (scope, parent, fn) => fn()}, context: {}});
-		await chai.expect(s.run()).to.not.be.rejected;
-		chai.expect(s.errors).to.be.empty;
-		chai.expect(arr).to.have.ordered.members(['BTS', 'BT', 'BTS', 'BT', 'AT', 'ATS', 'AT', 'BT', 'AT', 'ATS'])
-	})
 });
