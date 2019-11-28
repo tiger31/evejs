@@ -61,9 +61,8 @@ const tss = (scopes, length, dir) => {
 const ts = (scopes, length, dir) => {
 	it(`Scope: ${scopes}`, async () => {
 		const runner = new Runner({ filters: { scope: scopes }, test: { dir: dir, pattern: "*.ts.js" }});
-		runner.driver.test = (title, fn) => { fn(); };
 		runner.unloadTestFiles();
-		await chai.expect(runner.run()).to.not.be.rejected;
+		await chai.expect(runner.run().catch(console.log)).to.not.be.rejected;
 		chai.expect(runner.MISuites).to.include.property('0')
 			.and.include.nested.property('context.value')
 			.and.to.have.lengthOf(length);
