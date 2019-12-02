@@ -5,7 +5,7 @@ describe('Runner filtering', () => {
 		const runner = new Runner({
 			test: { dir: 'test/Runner/filtering/tests', pattern: '*.a.js' }
 		});
-		await chai.expect(runner.run()).to.not.be.rejected;
+		await chai.expect(runner.run().catch(console.log)).to.not.be.rejected;
 		chai.expect(runner.MISuites).to.include.property('0')
 			.and.include.property('config')
 			.and.include({epic: 'Epic'});
