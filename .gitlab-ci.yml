@@ -15,4 +15,4 @@ test:
   image: node:latest
   script:
     - npm install
-    - npm run test
+    - node ./node_modules/mocha/bin/_mocha --require test/utils.js test/**/*.test.js
