@@ -1,0 +1,3 @@
+mi("Suite", () => {
+	beforeSeed(() => {}, "foo");
+});

@@ -1,0 +1,1 @@
+beforeSeed(() => {}, { timeout: "foo" });

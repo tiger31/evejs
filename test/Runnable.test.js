@@ -11,7 +11,7 @@ describe("Runnable abstract class", () => {
 		testClass.consistenceKey = "test";
 	});
 	it("Create instance of extended test class", () => {
-		testClassInstance = new testClass();
+		testClassInstance = new testClass({fn: () => {}});
 	});
 	describe('Without nesting', () => {
 		it("Begin runnable with nesting forbidden", () => {
@@ -22,7 +22,7 @@ describe("Runnable abstract class", () => {
 		});
 		it("Begin another runnable while other isn't finished", () => {
 			const begin = () => {
-				const t = new testClass();
+				const t = new testClass({fn: () => {}});
 				t.emit(testClass.events.EVENT_RUNNABLE_BEGIN);
 			};
 			chai.expect(begin).to.throw(errors.MIConsistenceError);
@@ -34,7 +34,7 @@ describe("Runnable abstract class", () => {
 				.and.to.be.false;
 		});
 		it("Begin another runnable", () => {
-			const testClassInst2 = new testClass();
+			const testClassInst2 = new testClass({fn: () => {}});
 			testClassInst2.emit(testClass.events.EVENT_RUNNABLE_BEGIN);
 			testClassInst2.emit(testClass.events.EVENT_RUNNABLE_END);
 		})
@@ -43,7 +43,7 @@ describe("Runnable abstract class", () => {
 		it("Run nested runnable", () => {
 			testClass.nested = true;
 			testClassInstance.emit(testClass.events.EVENT_RUNNABLE_BEGIN);
-			const inst = new testClass();
+			const inst = new testClass({fn: () => {}});
 			inst.emit(testClass.events.EVENT_RUNNABLE_BEGIN);
 			testClassInstance.emit(testClass.events.EVENT_RUNNABLE_END);
 			inst.emit(testClass.events.EVENT_RUNNABLE_END);
@@ -52,8 +52,8 @@ describe("Runnable abstract class", () => {
 	describe('Proxy events', () => {
 		describe('_proxyEvent method', () => {
 			it('Proxy from event to event2', async () => {
-				const t1 = new testClass();
-				const t2 = new testClass();
+				const t1 = new testClass({fn: () => {}});
+				const t2 = new testClass({fn: () => {}});
 				t2._proxyEvent('event', 'event2', t1);
 				let resolver = {};
 				let promise = new Promise((resolve, reject) => {
@@ -66,8 +66,8 @@ describe("Runnable abstract class", () => {
 				await chai.expect(promise).to.be.fulfilled;
 			});
 			it('Proxy event with 3 args', async () => {
-				const t1 = new testClass();
-				const t2 = new testClass();
+				const t1 = new testClass({fn: () => {}});
+				const t2 = new testClass({fn: () => {}});
 				t2._proxyEvent('event', 'event2', t1);
 				let resolver = {};
 				let promise = new Promise((resolve, reject) => {
@@ -81,13 +81,13 @@ describe("Runnable abstract class", () => {
 			});
 			it('Proxy on non emitter', async () => {
 				const t1 = {};
-				const t2 = new testClass();
+				const t2 = new testClass({fn: () => {}});
 				chai.expect(() => {
 					t2._proxyEvent('event', 'event2', t1);
 				}).to.throw(errors.MINotEmitter);
 			});
 			it('Proxy on itself', async () => {
-				const t2 = new testClass();
+				const t2 = new testClass({fn: () => {}});
 				chai.expect(() => {
 					t2._proxyEvent('event', 'event2', t2);
 				}).to.throw(ReferenceError);
@@ -95,8 +95,8 @@ describe("Runnable abstract class", () => {
 		});
 		describe('proxy method', () => {
 			it('event as a string', async () => {
-				const t1 = new testClass();
-				const t2 = new testClass();
+				const t1 = new testClass({fn: () => {}});
+				const t2 = new testClass({fn: () => {}});
 				t2.proxy('event', t1);
 				let resolver = {};
 				let promise = new Promise((resolve, reject) => {
@@ -108,8 +108,8 @@ describe("Runnable abstract class", () => {
 				chai.expect(promise).to.be.fulfilled;
 			});
 			it('event as an array of events', async () => {
-				const t1 = new testClass();
-				const t2 = new testClass();
+				const t1 = new testClass({fn: () => {}});
+				const t2 = new testClass({fn: () => {}});
 				t2.proxy(['event', 'event2'], t1);
 				let resolver = {};
 				let promise = new Promise((resolve, reject) => {
@@ -127,8 +127,8 @@ describe("Runnable abstract class", () => {
 				chai.expect(promise).to.be.fulfilled;
 			});
 			it('Event as object', async () => {
-				const t1 = new testClass();
-				const t2 = new testClass();
+				const t1 = new testClass({fn: () => {}});
+				const t2 = new testClass({fn: () => {}});
 				t2.proxy({from: 'event', to: 'event2'}, t1);
 				let resolver = {};
 				let promise = new Promise((resolve, reject) => {
