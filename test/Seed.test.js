@@ -72,5 +72,17 @@ describe("Seed class", () => {
 			const seed = new Seed({ fn: () => new Seed({ fn: () => {}, context: {}, name: "" }), context: {}, name: "" }, {timeout: 200});
 			await chai.expect(seed.run()).to.be.rejectedWith(errors.MIConsistenceError);
 		})
+	});
+	describe("Bad args", () => {
+		it('Seed function ins\'t a function', () => {
+			chai.expect(() => {
+				const seed = new Seed({ fn: "foo", context: {}, name: "" });
+			}).to.throw(TypeError);
+		});
+		it('Seed timeout isn\'t a number', async () => {
+			chai.expect(() => {
+				const seed = new Seed({ fn: timeout_f(500, true, 1), context: {}, name: "" }, { timeout: "foo" });
+			}).to.throw(TypeError);
+		})
 	})
 });
