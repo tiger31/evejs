@@ -21,6 +21,7 @@ coverage:
   stage: test
   image: node:latest
   script:
+    - npm install -g mocha codecov
     - npm install
-    - NODE_ENV=test node_modules/.bin/nyc --reporter=lcovonly node_modules/mocha/bin/_mocha --require test/utils.js test/**/*.test.js
-    - node_modules/.bin/codecov -t ${CODECOV_TOKEN}
+    - NODE_ENV=test node_modules/.bin/nyc --reporter=lcovonly mocha --require test/utils.js test/**/*.test.js
+    - codecov -t ${CODECOV_TOKEN}
