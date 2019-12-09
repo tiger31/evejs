@@ -1,3 +1,5 @@
+require('@babel/register');
+
 global.errors = require('../lib/errors');
 global.chai = require('chai');
 chai.use(require('chai-as-promised'));

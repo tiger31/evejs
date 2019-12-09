@@ -4,3 +4,4 @@ node_modules/
 **/allure-report
 **/allure-results
 **/log.json
+coverage/

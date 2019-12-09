@@ -3,6 +3,7 @@ mi('Suite', () => {
 		await new Promise((resolve, reject) => {
 			setTimeout(() => {
 				self.values = ['A', 'B', 'C'];
+				resolve();
 			}, 500);
 		});
 	});
