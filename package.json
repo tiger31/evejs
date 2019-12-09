@@ -4,8 +4,8 @@
   "description": "Mocha extension for integration api testing",
   "main": "index.js",
   "scripts": {
-    "test": "node ./node_modules/mocha/bin/_mocha --require test/utils.js test/**/*.test.js",
-    "test:coverage": "NODE_ENV=test node_modules/.bin/nyc --reporter=lcovonly mocha --require test/utils.js test/**/*.test.js && node_modules/.bin/codecov",
+    "test": "node ./node_modules/mocha/bin/_mocha --require test/utils.js --recursive \"test/**/*.test.js\"",
+    "test:coverage": "NODE_ENV=test node_modules/.bin/nyc --reporter=lcovonly ./node_modules/mocha/bin/_mocha --require test/utils.js --recursive \"test/**/*.test.js\" && node_modules/.bin/codecov",
     "eslint": "./node_modules/.bin/eslint lib/classes",
     "eslint-fix": "./node_modules/.bin/eslint lib/classes --fix"
   },
