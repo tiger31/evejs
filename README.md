@@ -1,3 +1,5 @@
+[![codecov](https://codecov.io/gl/IllidariCat/mocha-integration/branch/master/graph/badge.svg)](https://codecov.io/gl/IllidariCat/mocha-integration)
+
 # mocha-integration
 
 mocha-integration (далее MI) - расширение фреймворка тестирование mocha, направленное на работу с интергационным тестирование, в частности в CI.
