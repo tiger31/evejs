@@ -1,4 +1,4 @@
-mi('Suite', () => {
+eve('Suite', () => {
 	seed('Seed', (context) => {
 		context.value = [];
 		scope('default', () => {

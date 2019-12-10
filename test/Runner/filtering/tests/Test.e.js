@@ -1,4 +1,4 @@
-mi('Suite', () => {
+eve('Suite', () => {
 	suite('Inner Suite', () => {
 		test('Test 1', () => {}, { story: "Story" });
 		test('Test 1', () => {}, { story: "Story 2" });

@@ -1,4 +1,4 @@
-mi('Suite', () => {
+eve('Suite', () => {
 	suite('Seed', (context) => {
 		scope('default', () => {
 			test('Default', () => {})

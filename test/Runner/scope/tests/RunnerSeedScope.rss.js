@@ -7,4 +7,4 @@ seed('Seed', (context) => {
 		context.value.push('test');
 	})
 });
-mi('Suite', () => {});
+eve('Suite', () => {});

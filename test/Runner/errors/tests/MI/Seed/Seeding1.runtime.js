@@ -1,4 +1,4 @@
-mi("Suite", () => {
+eve("Suite", () => {
 	seed("Seed", () => {
 		throw new Error();
 	});

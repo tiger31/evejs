@@ -1,1 +1,1 @@
-mi("Suite", () => {}, { sgdfg });
+eve("Suite", () => {}, { sgdfg });

@@ -1,4 +1,4 @@
-mi('Suite', (self) => {
+eve('Suite', (self) => {
 	seed('First', () => {});
 	seed('Second', () => { throw new Error() });
 	seed('Third', () => {});

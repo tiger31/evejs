@@ -1,4 +1,4 @@
-mi('Suite', () => {
+eve('Suite', () => {
 	suite('Inner Suite', () => {}, {
 		epic: 'Epic',
 		feature: 'Feature'

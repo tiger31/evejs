@@ -7,7 +7,7 @@ describe('Runner (Common)', () => {
 	describe('Exports', () => {
 		it('Add suite', () => {
 			const runner = new Runner({ test: { dir: 'test/Runner/filesIncluding/tests', pattern: "*.test.js" }});
-			runner.mi('Suite', () => {}, {});
+			runner.eve('Suite', () => {}, {});
 			chai.expect(runner.MISuites).to.have.lengthOf(1);
 			chai.expect(runner.MISuites).to.include.property('0')
 				.and.to.include.property('name', 'Suite')

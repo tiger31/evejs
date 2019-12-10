@@ -8,4 +8,4 @@ scope('test', () => {
 		context.b = 1;
 	})
 });
-mi('Suite', () => {});
+eve('Suite', () => {});

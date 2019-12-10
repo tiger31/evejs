@@ -1,3 +1,3 @@
-mi("Suite", () => {
-	mi("Suite 2", () => {})
+eve("Suite", () => {
+	eve("Suite 2", () => {})
 });

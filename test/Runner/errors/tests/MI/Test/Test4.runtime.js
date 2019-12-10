@@ -1,3 +1,3 @@
-mi("Suite", () => {
+eve("Suite", () => {
 	test('Test', () => {}, { timeout: "foo" });
 });

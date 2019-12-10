@@ -1,4 +1,4 @@
-mi('Suite', () => {
+eve('Suite', () => {
 	seed("Seed", async (self) => {
 		await new Promise((resolve, reject) => {
 			setTimeout(() => {
