@@ -8,12 +8,14 @@ describe('Runner collecting on errors', () => {
 				await chai.expect(runner.run()).to.not.be.rejected
 				const collect = runner.result;
 				chai.expect(collect).to.include.nested.property('errors[0]').and.include({name: "Error"})
+				runner.unloadTestFiles();
 			});
 			it('Emerge inner async error do not appear in runtime', async () => {
 				const runner = new Runner({test: {dir: "test/Runner/errors/tests/", pattern: "Emerge2.runtime.js"}});
 				await chai.expect(runner.run()).to.not.be.rejected
 				const collect = runner.result;
 				chai.expect(collect).to.include.nested.property('errors[0]').and.include({name: "Error"})
+				runner.unloadTestFiles();
 			});
 			describe("Seed", () => {
 				it("Seed throws in sync", async () => {
@@ -23,6 +25,7 @@ describe('Runner collecting on errors', () => {
 					chai.expect(collect).to.include.nested.property('errors[0]').and.include({name: "Error"})
 					chai.expect(collect).to.include.property('error').and.include({name: "MI_SEEDING_FAILED"})
 					chai.expect(collect).to.include({fatal: true})
+					runner.unloadTestFiles();
 				});
 				it("Seed throws in async", async () => {
 					const runner = new Runner({test: {dir: "test/Runner/errors/tests/Seed", pattern: "Seeding2.runtime.js"}});
@@ -31,6 +34,7 @@ describe('Runner collecting on errors', () => {
 					chai.expect(collect).to.include.nested.property('errors[0]').and.include({name: "Error"})
 					chai.expect(collect).to.include.property('error').and.include({name: "MI_SEEDING_FAILED"})
 					chai.expect(collect).to.include({fatal: true})
+					runner.unloadTestFiles();
 				})
 			});
 			describe("Hook", () => {
@@ -39,12 +43,14 @@ describe('Runner collecting on errors', () => {
 					await chai.expect(runner.run()).to.not.be.rejected
 					const collect = runner.result;
 					chai.expect(collect).to.include.nested.property('errors[0]').and.include({name: "Error"})
+					runner.unloadTestFiles();
 				});
 				it("Hook function throws async error", async () => {
 					const runner = new Runner({test: {dir: "test/Runner/errors/tests/Hook", pattern: "Hook2.runtime.js"}});
 					await chai.expect(runner.run()).to.not.be.rejected
 					const collect = runner.result;
 					chai.expect(collect).to.include.nested.property('errors[0]').and.include({name: "Error"})
+					runner.unloadTestFiles();
 				})
 			});
 			describe("MI", () => {
@@ -56,6 +62,7 @@ describe('Runner collecting on errors', () => {
 						chai.expect(collect).to.include({fatal: true})
 						chai.expect(collect).to.include.nested.property('suites[0].errors[0]').and.include({name: "Error"})
 						chai.expect(collect).to.include.property('error').and.include({name: "MI_SEEDING_FAILED"})
+						runner.unloadTestFiles();
 					});
 					it("Seed throws in async (with INTERRUPT RUN)", async () => {
 						const runner = new Runner({test: {dir: "test/Runner/errors/tests/MI/Seed", pattern: "Seeding2.runtime.js"}});
@@ -64,6 +71,7 @@ describe('Runner collecting on errors', () => {
 						chai.expect(collect).to.include({fatal: true})
 						chai.expect(collect).to.include.nested.property('suites[0].errors[0]').and.include({name: "Error"})
 						chai.expect(collect).to.include.property('error').and.include({name: "MI_SEEDING_FAILED"})
+						runner.unloadTestFiles();
 					})
 				});
 				describe("Hook", () => {
@@ -72,12 +80,14 @@ describe('Runner collecting on errors', () => {
 						await chai.expect(runner.run()).to.not.be.rejected
 						const collect = runner.result;
 						chai.expect(collect).to.include.nested.property('suites[0].errors[0]').and.include({name: "Error"})
+						runner.unloadTestFiles();
 					});
 					it("Hook function throws async error", async () => {
 						const runner = new Runner({test: {dir: "test/Runner/errors/tests/MI/Hook", pattern: "Hook2.runtime.js"}});
 						await chai.expect(runner.run()).to.not.be.rejected
 						const collect = runner.result;
 						chai.expect(collect).to.include.nested.property('suites[0].errors[0]').and.include({name: "Error"})
+						runner.unloadTestFiles();
 					})
 				});
 				describe("Test", () => {
@@ -87,6 +97,7 @@ describe('Runner collecting on errors', () => {
 						const collect = runner.result;
 						chai.expect(collect).to.include({fatal: true})
 						chai.expect(collect).to.include.property('error').and.include({name: "MI_RUNNER_FATAL"})
+						runner.unloadTestFiles();
 					});
 					it("Test config isn\'t an object", async () => {
 						const runner = new Runner({test: {dir: "test/Runner/errors/tests/MI/Test", pattern: "Test3.runtime.js"}});
@@ -94,6 +105,7 @@ describe('Runner collecting on errors', () => {
 						const collect = runner.result;
 						chai.expect(collect).to.include({fatal: true})
 						chai.expect(collect).to.include.property('error').and.include({name: "MI_RUNNER_FATAL"})
+						runner.unloadTestFiles();
 					});
 					it("Test timeout isn\'t a number", async () => {
 						const runner = new Runner({test: {dir: "test/Runner/errors/tests/MI/Test", pattern: "Test4.runtime.js"}});
@@ -101,6 +113,7 @@ describe('Runner collecting on errors', () => {
 						const collect = runner.result;
 						chai.expect(collect).to.include({fatal: true})
 						chai.expect(collect).to.include.property('error').and.include({name: "MI_RUNNER_FATAL"})
+						runner.unloadTestFiles();
 					})
 				});
 				describe("TestSuite", () => {
@@ -110,6 +123,7 @@ describe('Runner collecting on errors', () => {
 						const collect = runner.result;
 						chai.expect(collect).to.include({fatal: true})
 						chai.expect(collect).to.include.property('error').and.include({name: "MI_RUNNER_FATAL"})
+						runner.unloadTestFiles();
 					});
 					it("TestSuite timeout isn't a number", async () => {
 						const runner = new Runner({test: {dir: "test/Runner/errors/tests/MI/TestSuite", pattern: "Prepare2.runtime.js"}});
@@ -117,6 +131,7 @@ describe('Runner collecting on errors', () => {
 						const collect = runner.result;
 						chai.expect(collect).to.include({fatal: true})
 						chai.expect(collect).to.include.property('error').and.include({name: "MI_RUNNER_FATAL"})
+						runner.unloadTestFiles();
 					});
 					it("TestSuite config isn't an object", async () => {
 						const runner = new Runner({test: {dir: "test/Runner/errors/tests/MI/TestSuite", pattern: "Prepare3.runtime.js"}});
@@ -124,6 +139,7 @@ describe('Runner collecting on errors', () => {
 						const collect = runner.result;
 						chai.expect(collect).to.include({fatal: true})
 						chai.expect(collect).to.include.property('error').and.include({name: "MI_RUNNER_FATAL"})
+						runner.unloadTestFiles();
 					});
 					it("TestSuite function throws error", async () => {
 						const runner = new Runner({test: {dir: "test/Runner/errors/tests/MI/TestSuite", pattern: "Prepare4.runtime.js"}});
@@ -131,6 +147,7 @@ describe('Runner collecting on errors', () => {
 						const collect = runner.result;
 						chai.expect(collect).to.include({fatal: true})
 						chai.expect(collect).to.include.property('error').and.include({name: "MI_RUNNER_FATAL"})
+						runner.unloadTestFiles();
 					});
 					describe('Test', () => {
 						it("Test without fn", async () => {
@@ -139,6 +156,7 @@ describe('Runner collecting on errors', () => {
 							const collect = runner.result;
 							chai.expect(collect).to.include({fatal: true})
 							chai.expect(collect).to.include.property('error').and.include({name: "MI_RUNNER_FATAL"})
+							runner.unloadTestFiles();
 						});
 						it("Test config isn\'t an object", async () => {
 							const runner = new Runner({test: {dir: "test/Runner/errors/tests/MI/TestSuite/Test", pattern: "Test3.runtime.js"}});
@@ -146,6 +164,7 @@ describe('Runner collecting on errors', () => {
 							const collect = runner.result;
 							chai.expect(collect).to.include({fatal: true})
 							chai.expect(collect).to.include.property('error').and.include({name: "MI_RUNNER_FATAL"})
+							runner.unloadTestFiles();
 						});
 						it("Test timeout isn\'t a number", async () => {
 							const runner = new Runner({test: {dir: "test/Runner/errors/tests/MI/TestSuite/Test", pattern: "Test4.runtime.js"}});
@@ -153,6 +172,7 @@ describe('Runner collecting on errors', () => {
 							const collect = runner.result;
 							chai.expect(collect).to.include({fatal: true})
 							chai.expect(collect).to.include.property('error').and.include({name: "MI_RUNNER_FATAL"})
+							runner.unloadTestFiles();
 						})
 					})
 				});
