@@ -23,10 +23,6 @@ describe('Runner error handling', () => {
 				const runner = () => new Runner({test: {dir: "test/Runner/errors/tests/", pattern: "Bad.runner.js"}});
 				chai.expect(runner).to.throw(ReferenceError, 'defined');
 			});
-			it('Driver not a instance of Driver', () => {
-				const runner = () => new Runner({test: {dir: "test/Runner/errors/tests/"}, driver: {}});
-				chai.expect(runner).to.throw(TypeError);
-			});
 			it('Reporter not a instance of Reporter', () => {
 				const runner = () => new Runner({test: {dir: "test/Runner/errors/tests/"}, reporter: {}});
 				chai.expect(runner).to.throw(TypeError);

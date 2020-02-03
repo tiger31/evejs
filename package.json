@@ -21,6 +21,7 @@
   "homepage": "https://gitlab.com/IllidariCat/mocha-integration#readme",
   "dependencies": {
     "axios": "^0.19.0",
+    "bluebird": "^3.7.2",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "glob": "^7.1.6",
