@@ -1,4 +1,4 @@
-const TestSuite = require('../lib/classes/TestSuite');
+const TestSuite = require('../lib/classes/Suite');
 const Test = require('../lib/classes/Test');
 
 
