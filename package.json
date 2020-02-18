@@ -32,7 +32,8 @@
     "moment": "^2.24.0",
     "ms": "^2.1.2",
     "socket.io-client": "^2.3.0",
-    "uuid": "^3.3.3"
+    "uuid": "^3.3.3",
+    "yargs": "^15.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.7.5",
