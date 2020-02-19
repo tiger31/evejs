@@ -1,9 +1,9 @@
-#evesjs
+# evejs
 
 __evejs__ - is a test runner with built-in support of parallel and step tests launch, tests tree filtering by scope/epic/feature/story parameters. Currently working on Node.js
 
 
-##WIP
+## WIP
 
 - Server-side configuration
 - Detailed reports
@@ -13,14 +13,14 @@ __evejs__ - is a test runner with built-in support of parallel and step tests la
 - More tests
 - Broken tests detection
 
-##Issues 
+## Issues 
 As far as we are in alpha now, there can be bugs we don't know about yet. If you'll find some strange behaviour or unexpected crash, please submit issue in
 [our gitlab repo](https://gitlab.com/evereport/evejs/issues) with tags ```bug``` or ```broken```. 
 
 Or you can submit them here on github
 
 
-##Installation
+## Installation
 You can install it as a dev dependency
 ```shell script
 npm install evejs --save-dev
@@ -30,7 +30,7 @@ Or globally
 npm install evejs -g
 ```
 
-##Getting started
+## Getting started
 
 By default evejs searches files like ```*.test.js``` in ```tests``` directory. You can configure it via arguments. More information about arguments you can find by typing ```./node_modules/.bin/evejs --help```.
 
@@ -41,7 +41,7 @@ mkdir tests
 touch Simple.test.js
 ```
 The file content would be like this
-```js
+```javascript
 const expect = require('chai').expect;
 
 suite('Math', () => {
@@ -62,13 +62,13 @@ Tests:    1 passed, 1 total
 Time:     6ms
 ```
 You can add npm command in ```package.json``` to run tests easier
-```json
+```javascripton
 "scripts": {
   "test": "evejs"
 }
 ```
 
-##API Reference
+## API Reference
 ### Lifecycle
 _evejs_ supports 4 hooks:
  - before - runs at the beginning of suite execution (before execution of any member)
@@ -77,7 +77,7 @@ _evejs_ supports 4 hooks:
  - after - runs at the end of suite execution (after each member is complete)
  
 Let's check an example:
-```js
+```javascript
 const arr = [];
 before(() => { arr.push('Runner -> before'); });
 beforeEach(() => { arr.push('Runner -> beforeEach'); });
@@ -129,7 +129,7 @@ You can specify different value by adding ```timeout``` to test or hook config.
 
 _Note: ```suite()``` function if the only one not supporting ```async``` functions_
 
-```shell script
+```javascript
 const chai = require('chai');
 chai.use(require('chai-as-promised'));
 const expect = chai.expect;
@@ -171,15 +171,15 @@ Both suite and test can be set as _parallel_. Mechanic is the same.
 When in parallel execution order is a bit different. First, all parallel entities (suite or test) are collected in group.
 Each entity executed in parallel to other in group. After parallel group is complete, rest of entities execute in order as written.
 
-####Hooks
+#### Hooks
 
 ```beforeEach``` and ```afterEach``` hooks executed for each entity in parallel group. Test or suite executes right after it's ```beforeEach``` hook is complete. Same with ```afterEach``` hooks, but it executes right after entity.
 
-####Examples
+#### Examples
 
 First example: parallel suite with inner parallel tests.
 
-```js
+```javascript
 suite('Outer', () => {
   test('Parallel test 1', () => {
     /* checks here */
@@ -252,7 +252,7 @@ If we want skip further tests if one of them fails we can use ```step``` propert
 
 As far as suites and tests are executed in same order they were added, suite can also be a ```step```.
 
-```js
+```javascript
 suite('Outer', () => {
   suite('Suite 1', () => {
     test('Succeeded', () => {
@@ -342,7 +342,7 @@ Suites and tests can have special config parameters: ```scope```, ```epic```, ``
 
 Each parameter can have multiple values.
 
-```js
+```javascript
 suite('API', () => {
   suite('Endpoint 1', () => {
     test('Test 1', () => {
