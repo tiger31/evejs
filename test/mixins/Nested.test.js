@@ -6,13 +6,11 @@ describe('Nested mixin', () => {
 		Inst = Nested(class {});
 	});
 	describe('Methods', () => {
-		describe('Lock', () => {
+		describe('Nested.lock', () => {
 			it('nested = false', () => {
 				Inst.nested = false;
 				const inst = new Inst();
-				const inst2 = new Inst();
 				expect(() => inst.lock()).to.not.throw();
-				expect(() => inst2.lock()).to.throw(errors.MIConsistenceError);
 				inst.release();
 			});
 			it('nested = true', () => {
@@ -23,17 +21,16 @@ describe('Nested mixin', () => {
 				expect(() => inst2.lock()).to.not.throw();
 			});
 		});
-		it('Release', () => {
+		it('Nested.release', () => {
 			Inst.nested = false;
 			const inst = new Inst();
 			const inst2 = new Inst();
 			expect(() => inst.lock()).to.not.throw();
-			expect(() => inst2.lock()).to.throw(errors.MIConsistenceError);
-			inst.release();
 			expect(() => inst2.lock()).to.not.throw();
+			inst.release();
 			inst2.release();
 		});
-		it('isNestingLocked', () => {
+		it('Nested.isNestingLocked', () => {
 			const inst = new Inst();
 			const inst2 = new Inst();
 			inst.lock();

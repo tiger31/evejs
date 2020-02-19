@@ -5,7 +5,7 @@ describe('Runnable Mixin', () => {
 	step('Implementation', () => {
 		Inst = Runnable(class {});
 	});
-	describe('Parameters', () => {
+	describe('Properties', () => {
 		describe('Runnable.function', () => {
 			it('Set function', () => {
 				const inst = new Inst();

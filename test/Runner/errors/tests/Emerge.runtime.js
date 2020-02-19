@@ -1,3 +1,0 @@
-emerge(() => {
-	throw new Error()
-});

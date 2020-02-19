@@ -1,3 +1,0 @@
-eve("Suite", () => {
-	beforeSeed(() => {}, "foo");
-});
