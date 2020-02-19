@@ -23,11 +23,11 @@ Or you can submit them here on github
 ## Installation
 You can install it as a dev dependency
 ```shell script
-npm install evejs --save-dev
+npm install @evecat/evejs --save-dev
 ```
 Or globally
 ```shell script
-npm install evejs -g
+npm install @evecat/evejs -g
 ```
 
 ## Getting started
