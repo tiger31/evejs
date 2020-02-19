@@ -2,6 +2,7 @@
   "name": "evejs",
   "version": "1.1.0",
   "description": "JS tests runner",
+  "keywords": ["eve", "test", "runner", "bdd" ],
   "main": "index.js",
   "scripts": {
     "test": "node ./node_modules/mocha/bin/_mocha --require test/utils.js --recursive \"test/**/*.test.js\"",
