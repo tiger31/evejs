@@ -1,7 +1,7 @@
 node_modules/
 .idea/
 *.sh
-**/allure-report
-**/allure-results
 **/log.json
 coverage/
+.nyc_output/
+tests/
