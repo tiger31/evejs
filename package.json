@@ -1,5 +1,5 @@
 {
-  "name": "evejs",
+  "name": "@evecat/evejs",
   "version": "1.1.0",
   "description": "JS tests runner",
   "keywords": ["eve", "test", "runner", "bdd" ],
