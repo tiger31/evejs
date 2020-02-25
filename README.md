@@ -40,7 +40,7 @@ Let's create example tests file:
 mkdir tests
 touch Simple.test.js
 ```
-The file content would be like this
+Simple.test.js content:
 ```javascript
 const expect = require('chai').expect;
 
@@ -73,7 +73,7 @@ You can add npm command in ```package.json``` to run tests easier
 _evejs_ supports 4 hooks:
  - before - runs at the beginning of suite execution (before execution of any member)
  - beforeEach - runs before execution of each suite member
- - afterEach - runs after execution of each site member
+ - afterEach - runs after execution of each suite member
  - after - runs at the end of suite execution (after each member is complete)
  
 Let's check an example:
@@ -120,14 +120,14 @@ Tests:    3 passed, 3 total
 Time:     10ms
 ```
 
-What actually happened: Suite supports 4 type of hooks, Runner is inherited from suite so it also does. At the runner-level we have one suite and one test, so runner's eas hooks triggered twice. Suite has two tests so it's hooks are triggered in the same way.
+What actually happened: Suite supports 4 type of hooks, Runner is inherited from suite so it also does. At the runner-level we have one suite and one test, so runners ```each``` hooks are triggered twice. Suite has two tests so its hooks are triggered in the same way.
 
 ### Asynchronous functions
 
-__evejs__ works with Bluebird promises and fully supports ```async``` functions. Tests and hooks have default timeout equal 2000ms.
+__evejs__ works with Bluebird promises and fully supports ```async``` functions. Tests and hooks have default timeout, equals 2000ms.
 You can specify different value by adding ```timeout``` to test or hook config.
 
-_Note: ```suite()``` function if the only one not supporting ```async``` functions_
+_Note: ```suite()``` function is the only one not supporting ```async``` functions_
 
 ```javascript
 const chai = require('chai');
@@ -168,12 +168,12 @@ Both suite and test can be set as _parallel_. Mechanic is the same.
 
 #### Order
 
-When in parallel execution order is a bit different. First, all parallel entities (suite or test) are collected in group.
-Each entity executed in parallel to other in group. After parallel group is complete, rest of entities execute in order as written.
+The order in parallel execution order is a bit different. First, all parallel entities (suite or test) are collected in group.
+Each entity executes in parallel to other in group. After parallel group is complete, rest of entities execute in order as written.
 
 #### Hooks
 
-```beforeEach``` and ```afterEach``` hooks executed for each entity in parallel group. Test or suite executes right after it's ```beforeEach``` hook is complete. Same with ```afterEach``` hooks, but it executes right after entity.
+```beforeEach``` and ```afterEach``` hooks executed for each entity in parallel group. Test or suite executes right after its ```beforeEach``` hook is complete. Same with ```afterEach``` hooks, but it executes right after entity.
 
 #### Examples
 
@@ -224,7 +224,7 @@ Tests:    7 passed, 7 total
 Time:     12ms
 ```
 
-If we'll set our "Parallel suite 1" to non-parallel, result will be like this:
+If we set our "Parallel suite 1" to non-parallel, result will be like this:
 ```shell script
 Runner
   Outer
@@ -248,7 +248,7 @@ Time:     8ms
 
 ### Step tests
 
-If we want skip further tests if one of them fails we can use ```step``` property on test or suite.
+If we want to skip further tests if one of them fails we can use ```step``` property on test or suite.
 
 As far as suites and tests are executed in same order they were added, suite can also be a ```step```.
 
@@ -330,12 +330,12 @@ Suites:   3 failed, 1 pending, 4 total
 Tests:    2 passed, 2 failed, 3 pending, 7 total
 Time:     9ms
 ```
-If you want to manually skip test or suite, just add to it's config ```{skip: true}```
+If you want to manually skip test or suite, just add ```{skip: true}``` to its config
 
 #### Parallel & Step? Whaat?
 
 Parallel suites and tests can also be marked as ```step```. How it works:
-If parallel group has entities marked as ```step``` and some of this entities fails, all non-parallel entities will be skipped
+If parallel group has entities marked as ```step``` and some of these entities fail, all non-parallel entities will be skipped
 
 ### Filtering 
 Suites and tests can have special config parameters: ```scope```, ```epic```, ```feature```, ```story```, so we can launch tests for part of functionality
@@ -377,7 +377,7 @@ suite('API', () => {
   epic: 'api/v1'
 });
 ```
-If we'll filter tests, for example, by ```story: password``` , output will be:
+If we filter tests, for example, by ```story: password``` , output will be:
 ```shell script
 evejs --story password
 
