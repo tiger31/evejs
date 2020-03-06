@@ -32,7 +32,6 @@ module.exports = {
 		],
 		'no-param-reassign': 1,
 		'prefer-promise-reject-errors': 2,
-		'no-undefined': 2,
 		'callback-return': 2,
 		'handle-callback-err': 2,
 		'array-bracket-spacing': [

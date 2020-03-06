@@ -50,9 +50,14 @@ const argv = require('yargs')
 		},
 		r: {
 			alias: 'reporter',
-			choices: Runner.reporters,
 			describe: 'Reporter',
 			default: 'default',
+			group: 'Config'
+		},
+		include: {
+			describe: "Files to be included before test files",
+			default: [],
+			type: 'array',
 			group: 'Config'
 		}
 	}).argv;
