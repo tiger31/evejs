@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 const Runner = require('../lib/classes/Runner');
+const builder = require('@evecat/pages-reporter');
 
 const argv = require('yargs')
 	.options({
@@ -59,8 +60,22 @@ const argv = require('yargs')
 			default: [],
 			type: 'array',
 			group: 'Config'
+		},
+		'results-dir': {
+			describe: "While using eve reporter sets output directory on runner json results",
+			default: 'results',
+			group: 'Report'
+		},
+		'report-dir': {
+			describe: "While using eve reporter sets output directory for built report files",
+			default: 'report',
+			group: 'Report'
 		}
+	}).command('$0', "Run tests", () => {}, (args) => {
+		(new Runner(args)).run();
+	}).command('report', 'Build report from json results', () => {}, (args) => {
+		const b = new builder(args);
+		b.build();
 	}).argv;
 
-(new Runner(argv)).run();
 
